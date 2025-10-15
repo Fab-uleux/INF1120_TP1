@@ -19,6 +19,7 @@ public class MainClass {
         int nbAdulte = 0;
         int nbEnfant = 0;
         int nbAine = 0;
+        int age = 0;
 
         final int coutAnnuel = 750;
         final int coutMensuel = 70;
@@ -26,6 +27,7 @@ public class MainClass {
         double prixInitial = 0;
         double prixHorsTaxe = 0;
         double prixFinal = 0;
+        double rabaisAppliquer = 0;
 
         final double prixTPS = 0.05;
         final double prixTVQ = 0.09975;
@@ -43,12 +45,12 @@ public class MainClass {
         boolean annuel = false;
         boolean mensuel = false;
 
-        boolean switch1 = false;
-        boolean switch2 = false;
-        boolean switch3 = false;
-        boolean switch4 = false;
-        boolean switch5 = false;
-        boolean switch6 = false;
+        boolean validation1 = false;
+        boolean validation2 = false;
+        boolean validation3 = false;
+        boolean validation4 = false;
+        boolean validation5 = false;
+        boolean validation6 = false;
 
 
         final String MENU1 = ("******************************************\n" +
@@ -104,7 +106,7 @@ public class MainClass {
 
 
 
-        while(!switch1){
+        while(!validation1){
             System.out.println(MENU1);
             forfait=Clavier.lireString();
             switch(forfait){
@@ -112,13 +114,15 @@ public class MainClass {
 //                    choixForfait = false;
                     activite = true;
                     System.out.println("Vous avez choisi le format activité");
-                    switch1 = true;
+                    validation1 = true;
+                    validation2 = true;
                     break;
                 case "f","F":
 //                    activite = false;
                     choixForfait = true;
                     System.out.println("Vous avez choisi un format forfait");
-                    switch1 = true;
+                    validation1 = true;
+                    validation3 = true;
                     break;
                 default:
                     System.out.println("Veuillez sélectionner un forfait valide A ou F");
@@ -126,8 +130,32 @@ public class MainClass {
             }
         }
 
+        //Choisir le type de forfait
+        while(!validation2) {
+            if (choixForfait) {
+                System.out.println(MENUFORFAIT);
+                typeForfait = Clavier.lireString();
+                System.out.println(typeForfait);
+            }
+            switch (typeForfait) {
+                case "a", "A":
+                    System.out.println("Annuel");
+                    prixInitial = 750;
+                    validation2 = true;
+                    break;
+                case "m", "M":
+                    System.out.println("Mensuel");
+                    prixInitial = 70;
+                    validation2 = true;
+                    break;
+                default:
+                    System.out.println("Veuillez sélectionner un type de forfait valide A ou M");
+                    break;
+            }
+        }
+
         //Choisir le nombre de cours
-        while (!switch3){
+        while (!validation3){
             if (activite) {
                 System.out.println("Veuillez selectionné le nombre de cour que vous desirez (20$ par cours");
                 nbCours = Clavier.lireInt();
@@ -139,54 +167,39 @@ public class MainClass {
                 System.out.println("Vous avez sélectionné " + nbCours + " cours");
                 prixInitial = (nbCours * 20) ;
                 System.out.println(prixInitial);
-                switch3 = true;
-                switch2 = true;
+                validation3 = true;
             }
         }
-
-        //Choisir le type de forfait
-        while(!switch2) {
-            if (choixForfait) {
-                System.out.println(MENUFORFAIT);
-                typeForfait = Clavier.lireString();
-                System.out.println(typeForfait);
-            }
-            switch (typeForfait) {
-                case "a", "A":
-                    System.out.println("Annuel");
-                    prixInitial = 750;
-                    switch2 = true;
-                    break;
-                case "m", "M":
-                    System.out.println("Mensuel");
-                    prixInitial = 70;
-                    switch2 = true;
-                    break;
-                default:
-                    System.out.println("Veuillez sélectionner un type de forfait valide A ou M");
-                    break;
-            }
-        }
-
 
         //Choisir la catégorie de clients
-        while(!switch4) {
+        while(!validation4) {
             System.out.println(MENUCAT);
-            catPersonnes=Clavier.lireString();
+            catPersonnes = Clavier.lireString();
             switch (catPersonnes){
                 case "s","S":
-                    System.out.println("Seul");
-                    switch4 = true;
+                    System.out.println("Quelle est votre age?");
+                    age = Clavier.lireInt();
+                    if (age <= 0 || age >= 100){
+                        System.out.println("Veuillez entrez un age valide entre 1 et 100");
+                    } else if (age <= 12){
+                        rabaisAppliquer = rabaisEnfant;
+                        System.out.println("Un rabais de 10% seras appliquer au prix finale");
+                        validation4=true;
+                    } else if (age >= 65 || (age < 18)){
+                        rabaisAppliquer = rabaisAine;
+                        System.out.println("Un rabais de 5% seras appliquer au prix finale");
+                        validation4 = true;
+                    }
                     break;
                 case "g","G":
                     System.out.println(MENUENFANTAINE);
-                    typeGroupe=Clavier.lireString();
-                    switch4 = true;
+                    typeGroupe = Clavier.lireString();
+                    validation4 = true;
                     break;
                 case "f","F":
                     System.out.println(MENUFAMILLE);
-                    typeFamille=Clavier.lireInt();
-                    switch4 = true;
+                    typeFamille = Clavier.lireInt();
+                    validation4 = true;
                     break;
                 default:
                     System.out.println("Veuillez sélectionner une catégorie valide S, G ou F");
@@ -194,20 +207,10 @@ public class MainClass {
             }
         }
 
-
-        //System.out.println(forfait);
-
-        //Do while pour faire la validation
         //Prix finale devra être arrondi
 //        double nbr = 12.34567;
 //        double nbr2Dec = Math.round(nbr * 100.0) / 100.0;
 //        System.out.print(nbr2Dec);
-
-//        int age;
-//        do {
-//            System.out.println(age >= 15);
-//            age = Calvier.lireInt;
-//        } while(age >18)
 
     }
 }
