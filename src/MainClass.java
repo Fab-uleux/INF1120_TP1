@@ -23,6 +23,7 @@ public class MainClass {
         int nbEnfantFamille = 0;
         int nbAine = 0;
         int age = 0;
+        int optionPaiement = 0;
 
         final int coutAnnuel = 750;
         final int coutMensuel = 70;
@@ -31,7 +32,6 @@ public class MainClass {
         double prixHorsTaxe = 0.00;
         double prixFinal = 0.00;
         double rabaisAppliquer = 0.00;
-        int optionPaiement = 0;
 
         final double tps = 0.05;
         final double tvq = 0.09975;
@@ -41,9 +41,9 @@ public class MainClass {
 
         final double rabaisAine = 0.05;
         final double rabaisEnfant = 0.10;
-        final double rabaisFamilleDeuxEnfant = 0.60;
-        final double rabaisFamilleTroisEnfant = 0.70;
-        final double rabaisFamilleQuatreEnfant = 0.80;
+        final double rabaisFamilleDeuxEnfant = 0.06;
+        final double rabaisFamilleTroisEnfant = 0.07;
+        final double rabaisFamilleQuatreEnfant = 0.08;
         final double rabaisGroupeAine = 0.12;
         final double rabaisGroupeScolaire = 0.15;
 
@@ -93,7 +93,7 @@ public class MainClass {
                 "************************************************\n" +
                 "Entrez la catégorie :");
 
-        final String MENUENFANTAINE = ("*****************************\n" +
+        final String MENUGROUPE = ("*****************************\n" +
                 "* Type de groupe : *\n" +
                 "* ------------------- *\n" +
                 "* 1 pour aine *\n" +
@@ -111,14 +111,14 @@ public class MainClass {
                 "***************************************\n" +
                 "-Entrez votre choix : 1, 2, 3 ou 4 :");
 
-        final String MENUFIN = ("***************************************\n" +
+        final String MENUPAIEMENT = ("***************************************\n" +
                 "* Type de paiements : *\n" +
                 "* ------------------- *\n" +
                 "* 1. Cash *\n" +
                 "* 2. Par pigeon voyageur *\n" +
                 "* 3. Une quille pis 2 clopes *\n" +
                 "***************************************\n" +
-                "-Entrez votre choix : 1, 2, 3 ou 4 :");
+                "-Entrez votre choix : 1, 2 ou 3 :");
 
         while(!validation1){
             System.out.println(MENU1);
@@ -171,7 +171,7 @@ public class MainClass {
         //Choisir le nombre de cours
         while (!validation3){
             if (activite) {
-                System.out.println("Veuillez sélectionné le nombre de cour que vous desirez (20$ par cours");
+                System.out.println("Veuillez sélectionné le nombre de cour que vous désirez (20$ par cours");
                 nbCours = Clavier.lireInt();
                 System.out.println(nbCours);
             }
@@ -198,20 +198,20 @@ public class MainClass {
                     } else if (age <= 12){
                         rabaisAppliquer = rabaisEnfant;
                         System.out.println("Un rabais de 10% seras appliquer au prix finale");
+                        nbEnfant = 1;
                         validation4=true;
                     } else if (age >= 65 || (age < 18)){
                         rabaisAppliquer = rabaisAine;
                         System.out.println("Un rabais de 5% seras appliquer au prix finale");
+                        nbAine = 1;
                         validation4 = true;
                     }
                     break;
                 case "g","G":
-                    System.out.println(MENUENFANTAINE);
+                    System.out.println(MENUGROUPE);
                     typeGroupe = Clavier.lireInt();
                     if(typeGroupe == 1){
-                        System.out.println("vous avez sélectionner un groupe de type ainé");
-//                        System.out.println(" Veuillez maintenant entrez le nombre de personnes dans le groupe");
-//                        nbPersonnes = Clavier.lireInt();]
+                        System.out.println("vous avez sélectionner un groupe de type aînés");
                         rabaisAppliquer = rabaisGroupeAine;
                         System.out.println("Un rabais de 12% seras appliquer au prix finale");
                         validation4 = true;
@@ -221,7 +221,7 @@ public class MainClass {
                         System.out.println("Un rabais de 15% seras appliquer au prix finale");
                         validation4 = true;
                     } else {
-                        System.out.println("Veuillez sélectionner un choix valide, 1 pour groupe d'ainé et 2 pour un groupe scolaire.");
+                        System.out.println("Veuillez sélectionner un choix valide, 1 pour groupe d'aînés et 2 pour un groupe scolaire.");
                 }
                     break;
                 case "f","F":
@@ -231,20 +231,29 @@ public class MainClass {
                         System.out.println("Vous avez choisi une famille de deux adulte et deux enfants");
                         rabaisAppliquer = rabaisFamilleDeuxEnfant;
                         System.out.println("Un rabais de 6% seras appliquer au prix finale");
+                        nbAdulte = 2;
+                        nbEnfant = 2;
+                        validation4 = true;
                     } else if (typeFamille == 2){
                         System.out.println("Vous avez choisi une famille de deux adulte et trois enfants");
                         rabaisAppliquer = rabaisFamilleTroisEnfant;
                         System.out.println("Un rabais de 7% seras appliquer au prix finale");
+                        nbAdulte = 2;
+                        nbEnfant = 3;
+                        validation4 = true;
                     } else if (typeFamille == 3){
                         System.out.println("Vous avez choisi une famille de deux adulte et quatre enfants");
                         rabaisAppliquer = rabaisFamilleQuatreEnfant;
                         System.out.println("Un rabais de 8% seras appliquer au prix finale");
+                        nbAdulte = 2;
+                        nbEnfant = 4;
+                        validation4 = true;
                     } else if (typeFamille == 4){
                         System.out.println("Vous avez choisi une famille de deux adulte et quatre enfants et plus");
                         rabaisAppliquer = rabaisFamilleQuatreEnfant;
-                        System.out.println("Un rabais de 8% seras appliquer au prix finale et un rabais de 10% seras appliquer au enfant additionel");
-                        System.out.println("Veuillez sélectionner le nombre d'enfant totales dans votre famille:");
-                        nbEnfantFamille = Clavier.lireInt();
+                        System.out.println("Un rabais de 8% seras appliquer au prix finale et un rabais de 10% seras appliquer par enfant additionel");
+                        nbAdulte = 2;
+                        validation4 = true;
                     } else {
                         System.out.println("Veuillez sélectionner une option valide");
                     }
@@ -254,6 +263,38 @@ public class MainClass {
                     break;
             }
 
+            if (typeGroupe == 1) {
+                do {
+                    System.out.println("Veuillez sélectionner le nombre d'aînés dans votre groupe (10 minimum):");
+                    nbAine = Clavier.lireInt();
+                    if (nbAine < 10) {
+                        System.out.println("Le groupe doit contenir au moins 10 aînés, réessayez.");
+                    }
+                } while (nbAine < 10);
+                System.out.println("Vous avez sélectionné un groupe de " + nbAine + " aînés.");
+                prixInitial = prixInitial * nbAine;
+            }else if (typeGroupe == 2) {
+                do {
+                    System.out.println("Veuillez sélectionner le nombre d'enfant dans votre groupe (10 minimum):");
+                    nbEnfant = Clavier.lireInt();
+                    if (nbEnfant < 10) {
+                        System.out.println("Le groupe doit contenir au moins 10 enfants, réessayez.");
+                    }
+                } while (nbEnfant < 10);
+                System.out.println("Vous avez sélectionné un groupe de " + nbEnfant + " enfants");
+                prixInitial = prixInitial * nbEnfant;
+            }
+
+
+            if (typeFamille == 4){
+                System.out.println("Veuillez sélectionner le nombre d'enfant totales dans votre famille:");
+                nbEnfantFamille = Clavier.lireInt();
+                do {
+                    nbEnfant = (nbEnfant - 4);
+                }while (nbEnfant > 4);
+            }
+
+
             // Calculer le prix finale
             prixHorsTaxe = prixInitial * (1 - rabaisAppliquer);
             prixTPS = prixHorsTaxe * tps;
@@ -262,36 +303,34 @@ public class MainClass {
             prixFinal = Math.round(prixFinal * 100.0) / 100.0;
 
             // Afficher la facture en détail
-            System.out.println("Voici la facture détailler: /n");
-            System.out.println("Prix hors taxe: " + prixHorsTaxe);
-            System.out.println("TPS: " + prixTPS);
-            System.out.println("TVQ: " + prixTVQ);
-            System.out.println("Vous avez sauvez" + (prixHorsTaxe - prixInitial));
-            System.out.println("Prix final: " + prixFinal);
-            System.out.println("/n Veuillez sélectionner une des options de paiements suivant");
+            System.out.println("Voici la facture détailler: \n");
+            System.out.println("Prix hors taxe: " + prixHorsTaxe + "$");
+            System.out.println("TPS: " + prixTPS + "$");
+            System.out.println("TVQ: " + prixTVQ + "$");
+            System.out.println("Vous avez sauvez " + (prixInitial - prixHorsTaxe) + "$");
+            System.out.println("Prix final: " + prixFinal + "$");
+            System.out.println("\n Veuillez sélectionner une des options de paiements suivant");
 
             while (!validation5){
-                System.out.println(MENUFIN);
+                System.out.println(MENUPAIEMENT);
                 optionPaiement = Clavier.lireInt();
                 switch (optionPaiement){
                     case 1:
                         System.out.println("Cash?!? dans cette économie?");
                         validation5 = true;
                         break;
-
                     case 2:
                         System.out.println("Ok, si vous voulez vraiment...");
                         validation5 = true;
                         break;
-
                     case 3:
                         System.out.println("Yeeeaaah booooooi");
                         validation5 = true;
                         break;
-
                     default:
                         System.out.println("Veuillez choisir une des option valide");
                 }
+                System.out.println("Votre paiement à été accepter, une facture vous seras envoyé sous peu.");
 
             }
 
