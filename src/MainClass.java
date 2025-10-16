@@ -9,13 +9,14 @@ date:14/10/2025
 
 public class MainClass {
     public static void main(String[] args){
+        //String
         String forfait = "";
         String typeForfait = "";
         String catPersonnes = "";
 
+        //int
         int typeFamille = 0;
         int typeGroupe = 0;
-
         int nbCours = 0;
         int nbPersonnes = 0;
         int nbAdulte = 0;
@@ -25,20 +26,21 @@ public class MainClass {
         int age = 0;
         int optionPaiement = 0;
 
+        //final int
         final int coutAnnuel = 750;
         final int coutMensuel = 70;
 
+        //double
         double prixInitial = 0.00;
         double prixHorsTaxe = 0.00;
         double prixFinal = 0.00;
         double rabaisAppliquer = 0.00;
-
-        final double tps = 0.05;
-        final double tvq = 0.09975;
-
         double prixTVQ = 0.00;
         double prixTPS = 0.00;
 
+        //final double
+        final double tps = 0.05;
+        final double tvq = 0.09975;
         final double rabaisAine = 0.05;
         final double rabaisEnfant = 0.10;
         final double rabaisFamilleDeuxEnfant = 0.06;
@@ -47,11 +49,13 @@ public class MainClass {
         final double rabaisGroupeAine = 0.12;
         final double rabaisGroupeScolaire = 0.15;
 
+        //boolean
         boolean choixForfait = false;
         boolean activite = false;
         boolean annuel = false;
         boolean mensuel = false;
 
+        //boolean validation
         boolean validation1 = false;
         boolean validation2 = false;
         boolean validation3 = false;
@@ -60,6 +64,7 @@ public class MainClass {
         boolean validation6 = false;
 
 
+        //final string MENU
         final String MENU1 = ("******************************************\n" +
                 "* Bienvenue au complexe Sportif UQASPORT *\n" +
                 "*\n" +
@@ -82,7 +87,7 @@ public class MainClass {
                 "******************************************\n" +
                 "Choisissez le type de forfait :");
 
-        final String MENUCAT = ("************************************************\n" +
+        final String MENUCATEGORIE = ("************************************************\n" +
                 "* Bienvenue au complexe Sportif UQASPORT *\n" +
                 "*\n" +
                 "* Catégorie de personnes : *\n" +
@@ -115,11 +120,12 @@ public class MainClass {
                 "* Type de paiements : *\n" +
                 "* ------------------- *\n" +
                 "* 1. Cash *\n" +
-                "* 2. Par pigeon voyageur *\n" +
+                "* 2. Crédit *\n" +
                 "* 3. Une quille pis 2 clopes *\n" +
                 "***************************************\n" +
                 "-Entrez votre choix : 1, 2 ou 3 :");
 
+        //Sélection du type forfait ou activité
         while(!validation1){
             System.out.println(MENU1);
             forfait=Clavier.lireString();
@@ -144,7 +150,7 @@ public class MainClass {
             }
         }
 
-        //Choisir le type de forfait
+        //Choisir le type de forfait annuel ou mensuel
         while(!validation2) {
             if (choixForfait) {
                 System.out.println(MENUFORFAIT);
@@ -168,7 +174,7 @@ public class MainClass {
             }
         }
 
-        //Choisir le nombre de cours
+        //Choisir le nombre de cours si type activité fut sélectionner
         while (!validation3){
             if (activite) {
                 System.out.println("Veuillez sélectionné le nombre de cour que vous désirez (20$ par cours");
@@ -185,9 +191,9 @@ public class MainClass {
             }
         }
 
-        //Choisir la catégorie de clients et appliqué le rabais associé
+        //Choisir la catégorie de clients ou groupe et appliqué le rabais associé
         while(!validation4) {
-            System.out.println(MENUCAT);
+            System.out.println(MENUCATEGORIE);
             catPersonnes = Clavier.lireString();
             switch (catPersonnes){
                 case "s","S":
@@ -263,6 +269,7 @@ public class MainClass {
                     break;
             }
 
+            //Si groupe sélectionner, choix du nombre de personne dans le groupe.
             if (typeGroupe == 1) {
                 do {
                     System.out.println("Veuillez sélectionner le nombre d'aînés dans votre groupe (10 minimum):");
@@ -285,7 +292,7 @@ public class MainClass {
                 prixInitial = prixInitial * nbEnfant;
             }
 
-
+            //si famille a plus que 4 enfant, applique un rabais associer et applique la valuer a nbEnfant.
             if (typeFamille == 4){
                 System.out.println("Veuillez sélectionner le nombre d'enfant totales dans votre famille:");
                 nbEnfantFamille = Clavier.lireInt();
@@ -293,7 +300,6 @@ public class MainClass {
                     nbEnfant = (nbEnfant - 4);
                 }while (nbEnfant > 4);
             }
-
 
             // Calculer le prix finale
             prixHorsTaxe = prixInitial * (1 - rabaisAppliquer);
@@ -311,30 +317,29 @@ public class MainClass {
             System.out.println("Prix final: " + prixFinal + "$");
             System.out.println("\n Veuillez sélectionner une des options de paiements suivant");
 
+            //Choix du type de paiement
             while (!validation5){
                 System.out.println(MENUPAIEMENT);
                 optionPaiement = Clavier.lireInt();
                 switch (optionPaiement){
                     case 1:
-                        System.out.println("Cash?!? dans cette économie?");
+                        System.out.println("Cash?!? dans cette économie?\n");
+                        System.out.println("Veuillez entrez le montant montant payer");
                         validation5 = true;
                         break;
                     case 2:
-                        System.out.println("Ok, si vous voulez vraiment...");
+                        System.out.println("Veuillez entrez le montant montant payer");
                         validation5 = true;
                         break;
                     case 3:
-                        System.out.println("Yeeeaaah booooooi");
+                        System.out.println("Yeeeaaah booooooi !1!!");
                         validation5 = true;
                         break;
                     default:
                         System.out.println("Veuillez choisir une des option valide");
                 }
                 System.out.println("Votre paiement à été accepter, une facture vous seras envoyé sous peu.");
-
             }
-
-
         }
 
     }
