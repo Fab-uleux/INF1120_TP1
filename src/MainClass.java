@@ -18,10 +18,10 @@ public class MainClass {
         int typeFamille = 0;
         int typeGroupe = 0;
         int nbCours = 0;
-        int nbPersonnes = 0;
         int nbAdulte = 0;
         int nbEnfant = 0;
         int nbEnfantFamille = 0;
+        int nbEnfantSupplementaire = 0;
         int nbAine = 0;
         int age = 0;
         int optionPaiement = 0;
@@ -35,9 +35,14 @@ public class MainClass {
         double prixHorsTaxe = 0.00;
         double prixFinal = 0.00;
         double rabaisAppliquer = 0.00;
+        double prixGrosseFamille = 0.00;
+        double prixEnfantSupplementaire = 0.00;
+        double prixTotalFamille = 0.00;
         double prixTVQ = 0.00;
         double prixTPS = 0.00;
         double prixPayer = 0.00;
+        double montantDonne = 0.00;
+        double change = 0.00;
 
         //final double
         final double tps = 0.05;
@@ -62,8 +67,6 @@ public class MainClass {
         boolean validation3 = false;
         boolean validation4 = false;
         boolean validation5 = false;
-        boolean validation6 = false;
-
 
         //final string MENU
         final String MENU1 = ("******************************************\n" +
@@ -178,7 +181,7 @@ public class MainClass {
         //Choisir le nombre de cours si type activité fut sélectionner
         while (!validation3){
             if (activite) {
-                System.out.println("Veuillez sélectionné le nombre de cour que vous désirez (20$ par cours");
+                System.out.println("Veuillez sélectionné le nombre de cour que vous désirez (20$ par cours)");
                 nbCours = Clavier.lireInt();
                 System.out.println(nbCours);
             }
@@ -211,6 +214,8 @@ public class MainClass {
                         rabaisAppliquer = rabaisAine;
                         System.out.println("Un rabais de 5% seras appliquer au prix finale");
                         nbAine = 1;
+                        validation4 = true;
+                    } else {
                         validation4 = true;
                     }
                     break;
@@ -258,6 +263,8 @@ public class MainClass {
                         System.out.println("Un rabais de 6% seras appliquer au prix finale");
                         nbAdulte = 2;
                         nbEnfant = 2;
+                        prixInitial = (nbAdulte + nbEnfant) * prixInitial;
+                        System.out.println(prixInitial);
                         validation4 = true;
                     } else if (typeFamille == 2){
                         System.out.println("Vous avez choisi une famille de deux adulte et trois enfants");
@@ -265,6 +272,7 @@ public class MainClass {
                         System.out.println("Un rabais de 7% seras appliquer au prix finale");
                         nbAdulte = 2;
                         nbEnfant = 3;
+                        prixInitial = (nbAdulte + nbEnfant) * prixInitial;
                         validation4 = true;
                     } else if (typeFamille == 3){
                         System.out.println("Vous avez choisi une famille de deux adulte et quatre enfants");
@@ -272,12 +280,29 @@ public class MainClass {
                         System.out.println("Un rabais de 8% seras appliquer au prix finale");
                         nbAdulte = 2;
                         nbEnfant = 4;
+                        prixInitial = (nbAdulte + nbEnfant) * prixInitial;
                         validation4 = true;
                     } else if (typeFamille == 4){
-                        System.out.println("Vous avez choisi une famille de deux adulte et quatre enfants et plus");
+                        System.out.println("Vous avez choisi une famille de deux adulte et plus que quatre enfant");
                         rabaisAppliquer = rabaisFamilleQuatreEnfant;
                         System.out.println("Un rabais de 8% seras appliquer au prix finale et un rabais de 10% seras appliquer par enfant additionel");
                         nbAdulte = 2;
+                        nbEnfant = 4;
+                        prixGrosseFamille = (nbAdulte + nbEnfant) * prixInitial;
+                        System.out.println(prixGrosseFamille);
+                        do {
+                            System.out.println("Veuillez sélectionner le nombre total d'enfants dans votre famille (plus de 4) :");
+                            nbEnfantFamille = Clavier.lireInt();
+                            if (nbEnfantFamille <= 4) {
+                                System.out.println("Le nombre d'enfants doit être supérieur à 4.");
+                            }
+                        } while (nbEnfantFamille <= 4);
+                        // Calcul du prix pour les enfants supplémentaires
+                        nbEnfantSupplementaire = nbEnfantFamille - 4;
+                        prixEnfantSupplementaire = (nbEnfantSupplementaire * prixInitial) * (1 - rabaisEnfant);
+                        // Total final pour famille avec plus que quatre enfants, assigne a prix initial pour que le calcul finale soit le meme ppour toutes les possibiliter
+                        prixInitial = prixGrosseFamille + prixEnfantSupplementaire;
+                        System.out.println(prixTotalFamille);
                         validation4 = true;
                     } else {
                         System.out.println("Veuillez sélectionner une option valide");
@@ -286,16 +311,6 @@ public class MainClass {
                 default:
                     System.out.println("Veuillez sélectionner une catégorie valide S, G ou F");
                     break;
-            }
-
-            //si famille a plus que 4 enfant, applique un rabais associer et applique la valuer à nbEnfant.
-            if (typeFamille == 4){
-                System.out.println("Veuillez sélectionner le nombre d'enfant totales dans votre famille:");
-                nbEnfantFamille = Clavier.lireInt();
-                do {
-                    nbEnfant = (nbEnfant - 4);
-                    prixInitial = prixInitial;
-                }while (nbEnfant > 4);
             }
 
             // Calculer le prix finale
@@ -330,22 +345,33 @@ public class MainClass {
                 switch (optionPaiement){
                     case 1:
                         System.out.println("Cash?!? dans cette économie?\n");
-                        System.out.println("Veuillez entrez le montant montant payer");
-
-                        validation5 = true;
-                        break;
+                        do {
+                            System.out.println("Le montant total à payer est de : " + prixFinal + " $");
+                            montantDonne = Clavier.lireDouble();
+                            System.out.println(montantDonne);
+                            if (montantDonne < prixFinal) {
+                                System.out.println("Veuillez deposer un montant égal ou supérieur a " + prixFinal + " $");
+                            } else if (montantDonne == prixFinal) {
+                                System.out.println("Montant exact reçu, merci!");
+                                validation5 = true;
+                            } else {
+                                change = Math.round((montantDonne - prixFinal) * 100.0) / 100.0;
+                                System.out.println("Merci, voici votre change : " + change + " $");
+                                validation5 = true;
+                            }
+                        } while (!validation5); // repeat if payment not enough
+                    break;
                     case 2:
-                        System.out.println("Veuillez entrez le montant montant payer");
+                        System.out.println("Paiement par carte accepté. Merci! ");
                         validation5 = true;
                         break;
                     case 3:
-                        System.out.println("Yeeeaaah booooooi !1!!");
+                        System.out.println("Yeeeaaah booooooi!1!!");
                         validation5 = true;
                         break;
                     default:
                         System.out.println("Veuillez choisir une des option valide");
                 }
-                System.out.println("Votre paiement à été accepter, une facture vous seras envoyé sous peu.");
             }
         }
 
