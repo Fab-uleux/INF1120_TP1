@@ -315,10 +315,14 @@ public class MainClass {
                     "* Prix hors taxe: " + prixHorsTaxe + " $ *\n" +
                     "* TPS: " + prixTPS + " $ *\n" +
                     "* TVQ: " + prixTVQ + " $ *\n" +
-                    "* Vous avez sauvez " + (prixInitial - prixHorsTaxe) + " $ *\n" +
                     "* Prix final: " + prixFinal + " $ *\n" +
                     "************************************************\n" +
                     "Veuillez sélectionner une des options de paiements suivant :");
+
+            //Si il n'y as pas de rabais, n'affiche pas le montant sauvé
+            if (prixInitial != prixHorsTaxe){
+                System.out.println("\n* Vous avez sauvez " + (prixInitial - prixHorsTaxe) + " $ *\n");
+            }
 
             // Afficher la facture en détail
             System.out.println(MENUFACTURE);
