@@ -37,6 +37,7 @@ public class MainClass {
         double rabaisAppliquer = 0.00;
         double prixTVQ = 0.00;
         double prixTPS = 0.00;
+        double prixPayer = 0.00;
 
         //final double
         final double tps = 0.05;
@@ -308,14 +309,19 @@ public class MainClass {
             prixFinal = prixHorsTaxe + prixTPS + prixTVQ;
             prixFinal = Math.round(prixFinal * 100.0) / 100.0;
 
+            //Doit être positionner ici dans le code puisque les valeur ne seront pas mis a jours ci declarer au debut du code
+            final String MENUFACTURE = ("************************************************\n" +
+                    "* Voici la facture détailler: *\n" +
+                    "* Prix hors taxe: " + prixHorsTaxe + " $ *\n" +
+                    "* TPS: " + prixTPS + " $ *\n" +
+                    "* TVQ: " + prixTVQ + " $ *\n" +
+                    "* Vous avez sauvez " + (prixInitial - prixHorsTaxe) + " $ *\n" +
+                    "* Prix final: " + prixFinal + " $ *\n" +
+                    "************************************************\n" +
+                    "Veuillez sélectionner une des options de paiements suivant :");
+
             // Afficher la facture en détail
-            System.out.println("Voici la facture détailler: \n");
-            System.out.println("Prix hors taxe: " + prixHorsTaxe + "$");
-            System.out.println("TPS: " + prixTPS + "$");
-            System.out.println("TVQ: " + prixTVQ + "$");
-            System.out.println("Vous avez sauvez " + (prixInitial - prixHorsTaxe) + "$");
-            System.out.println("Prix final: " + prixFinal + "$");
-            System.out.println("\n Veuillez sélectionner une des options de paiements suivant");
+            System.out.println(MENUFACTURE);
 
             //Choix du type de paiement
             while (!validation5){
@@ -325,6 +331,7 @@ public class MainClass {
                     case 1:
                         System.out.println("Cash?!? dans cette économie?\n");
                         System.out.println("Veuillez entrez le montant montant payer");
+
                         validation5 = true;
                         break;
                     case 2:
