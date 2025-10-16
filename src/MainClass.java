@@ -221,11 +221,29 @@ public class MainClass {
                         System.out.println("vous avez sélectionner un groupe de type aînés");
                         rabaisAppliquer = rabaisGroupeAine;
                         System.out.println("Un rabais de 12% seras appliquer au prix finale");
+                        do {
+                            System.out.println("Veuillez sélectionner le nombre d'aînés dans votre groupe (10 minimum):");
+                            nbAine = Clavier.lireInt();
+                            if (nbAine < 10) {
+                                System.out.println("Le groupe doit contenir au moins 10 aînés, réessayez.");
+                            }
+                        } while (nbAine < 10);
+                        System.out.println("Vous avez sélectionné un groupe de " + nbAine + " aînés.");
+                        prixInitial = prixInitial * nbAine;
                         validation4 = true;
                     } else if(typeGroupe ==2){
                         System.out.println("vous avez sélectionner un groupe de type enfant");
                         rabaisAppliquer = rabaisGroupeScolaire;
                         System.out.println("Un rabais de 15% seras appliquer au prix finale");
+                        do {
+                            System.out.println("Veuillez sélectionner le nombre d'enfant dans votre groupe (10 minimum):");
+                            nbEnfant = Clavier.lireInt();
+                            if (nbEnfant < 10) {
+                                System.out.println("Le groupe doit contenir au moins 10 enfants, réessayez.");
+                            }
+                        } while (nbEnfant < 10);
+                        System.out.println("Vous avez sélectionné un groupe de " + nbEnfant + " enfants");
+                        prixInitial = prixInitial * nbEnfant;
                         validation4 = true;
                     } else {
                         System.out.println("Veuillez sélectionner un choix valide, 1 pour groupe d'aînés et 2 pour un groupe scolaire.");
@@ -270,35 +288,13 @@ public class MainClass {
                     break;
             }
 
-            //Si groupe sélectionner, choix du nombre de personne dans le groupe.
-            if (typeGroupe == 1) {
-                do {
-                    System.out.println("Veuillez sélectionner le nombre d'aînés dans votre groupe (10 minimum):");
-                    nbAine = Clavier.lireInt();
-                    if (nbAine < 10) {
-                        System.out.println("Le groupe doit contenir au moins 10 aînés, réessayez.");
-                    }
-                } while (nbAine < 10);
-                System.out.println("Vous avez sélectionné un groupe de " + nbAine + " aînés.");
-                prixInitial = prixInitial * nbAine;
-            }else if (typeGroupe == 2) {
-                do {
-                    System.out.println("Veuillez sélectionner le nombre d'enfant dans votre groupe (10 minimum):");
-                    nbEnfant = Clavier.lireInt();
-                    if (nbEnfant < 10) {
-                        System.out.println("Le groupe doit contenir au moins 10 enfants, réessayez.");
-                    }
-                } while (nbEnfant < 10);
-                System.out.println("Vous avez sélectionné un groupe de " + nbEnfant + " enfants");
-                prixInitial = prixInitial * nbEnfant;
-            }
-
-            //si famille a plus que 4 enfant, applique un rabais associer et applique la valuer a nbEnfant.
+            //si famille a plus que 4 enfant, applique un rabais associer et applique la valuer à nbEnfant.
             if (typeFamille == 4){
                 System.out.println("Veuillez sélectionner le nombre d'enfant totales dans votre famille:");
                 nbEnfantFamille = Clavier.lireInt();
                 do {
                     nbEnfant = (nbEnfant - 4);
+                    prixInitial = prixInitial;
                 }while (nbEnfant > 4);
             }
 
