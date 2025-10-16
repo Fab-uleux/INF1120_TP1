@@ -37,10 +37,8 @@ public class MainClass {
         double rabaisAppliquer = 0.00;
         double prixGrosseFamille = 0.00;
         double prixEnfantSupplementaire = 0.00;
-        double prixTotalFamille = 0.00;
         double prixTVQ = 0.00;
         double prixTPS = 0.00;
-        double prixPayer = 0.00;
         double montantDonne = 0.00;
         double change = 0.00;
 
@@ -58,8 +56,6 @@ public class MainClass {
         // Variables booléennes de choix
         boolean choixForfait = false;
         boolean activite = false;
-        boolean annuel = false;
-        boolean mensuel = false;
 
         // Variables booléennes de validation des étapes
         boolean validation1 = false;
@@ -67,6 +63,7 @@ public class MainClass {
         boolean validation3 = false;
         boolean validation4 = false;
         boolean validation5 = false;
+        boolean validation6 = false;
 
         // Menus affichés à l'utilisateur
         final String MENU1 = ("******************************************\n" +
@@ -196,23 +193,24 @@ public class MainClass {
             catPersonnes = Clavier.lireString();
             switch (catPersonnes){
                 case "s","S":
-                    System.out.println("Quelle est votre age?");
-                    age = Clavier.lireInt();
-                    if (age <= 0 || age >= 100){
-                        System.out.println("Veuillez entrez un age valide entre 1 et 100");
-                    } else if (age <= 12){
-                        rabaisAppliquer = rabaisEnfant;
-                        System.out.println("Un rabais de 10% seras appliquer au prix finale");
-                        nbEnfant = 1;
-                        validation4=true;
-                    } else if (age >= 65 || (age < 18)){
-                        rabaisAppliquer = rabaisAine;
-                        System.out.println("Un rabais de 5% seras appliquer au prix finale");
-                        nbAine = 1;
-                        validation4 = true;
-                    } else {
-                        validation4 = true;
-                    }
+                    do{
+                        System.out.println("Quelle est votre age?");
+                        age = Clavier.lireInt();
+                        if (age <= 0 || age >= 100){
+                            System.out.println("Veuillez entrez un age valide entre 1 et 100");
+                        } else if (age <= 12){
+                            rabaisAppliquer = rabaisEnfant;
+                            System.out.println("Un rabais de 10% seras appliquer au prix finale");
+                            nbEnfant = 1;
+                            validation6 = true;
+                        } else if (age >= 65 || (age < 18)){
+                            rabaisAppliquer = rabaisAine;
+                            System.out.println("Un rabais de 5% seras appliquer au prix finale");
+                            nbAine = 1;
+                            validation6 = true;
+                        }
+                    }while(!validation6);
+                    validation4 = true;
                     break;
                 case "g","G":
                     // Catégorie groupe
@@ -305,7 +303,6 @@ public class MainClass {
                         prixEnfantSupplementaire = (nbEnfantSupplementaire * prixInitial) * (1 - rabaisEnfant);
                         // Total final pour famille avec plus de quatre enfants
                         prixInitial = prixGrosseFamille + prixEnfantSupplementaire;
-                        System.out.println(prixTotalFamille);
                         validation4 = true;
                     } else {
                         System.out.println("Veuillez sélectionner une option valide");
